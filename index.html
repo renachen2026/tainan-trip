@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f0e5">
+  <title>增進同仁互動最佳方案｜台南兩天一夜</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #2f302b;
+      --muted: #73756b;
+      --paper: #fbf8f1;
+      --card: #fffdf8;
+      --line: #e9e1d2;
+      --orange: #bf603b;
+      --green: #647b64;
+      --sun: #e5bd65;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: .02em;
+    }
+    .page { width: min(100% - 32px, 760px); margin: 0 auto; padding: 32px 0 48px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 32px 24px 28px;
+      border: 1px solid #eadfc9;
+      border-radius: 26px;
+      background: #f2e7d2;
+    }
+    .hero::after {
+      content: ""; position: absolute; width: 170px; height: 170px; right: -42px; top: -52px;
+      border: 1px solid rgba(191,96,59,.22); border-radius: 50%;
+      box-shadow: 0 0 0 18px rgba(191,96,59,.05), 0 0 0 38px rgba(191,96,59,.04);
+      pointer-events: none;
+    }
+    .eyebrow { margin: 0 0 6px; color: var(--orange); font-size: 13px; font-weight: 750; letter-spacing: .16em; }
+    h1 { margin: 0; font-size: clamp(32px, 8vw, 48px); line-height: 1.2; letter-spacing: .04em; }
+    .intro { max-width: 34em; margin: 13px 0 0; color: #5b5b50; font-size: 16px; }
+    .hero-note { display: inline-flex; align-items: center; gap: 8px; margin-top: 19px; padding: 7px 12px; border-radius: 999px; background: rgba(255,253,248,.72); color: #655746; font-size: 13px; font-weight: 650; }
+    .hero-note span { width: 7px; height: 7px; border-radius: 50%; background: var(--sun); }
+    .day-nav { display: flex; gap: 10px; margin: 20px 0 30px; }
+    .day-nav a { flex: 1; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--ink); text-align: center; text-decoration: none; font-size: 15px; font-weight: 700; }
+    .day-nav a:focus-visible, a:focus-visible { outline: 3px solid #bd795d; outline-offset: 3px; }
+    .day { margin-top: 30px; scroll-margin-top: 16px; }
+    .day-heading { display: flex; align-items: center; gap: 12px; margin: 0 0 15px; }
+    .day-number { display: grid; place-items: center; flex: 0 0 48px; height: 48px; border-radius: 16px; background: var(--green); color: white; font-size: 14px; font-weight: 750; }
+    .day:nth-of-type(2) .day-number { background: var(--orange); }
+    h2 { margin: 0; font-size: 23px; line-height: 1.35; }
+    .day-subtitle { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+    .stops { position: relative; display: grid; gap: 14px; padding-left: 27px; }
+    .stops::before { content: ""; position: absolute; top: 12px; bottom: 12px; left: 8px; width: 2px; background: linear-gradient(var(--green), #d9c797, var(--orange)); }
+    .stop { position: relative; display: block; padding: 15px 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+    .stop::before { content: ""; position: absolute; left: -25px; top: 21px; width: 12px; height: 12px; border: 3px solid var(--paper); border-radius: 50%; background: var(--green); box-shadow: 0 0 0 1px var(--green); }
+    .stop:nth-child(even)::before { background: var(--orange); box-shadow: 0 0 0 1px var(--orange); }
+    .time { display: inline-block; margin: 0 0 4px; color: var(--orange); font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .place { margin: 0; font-size: 18px; font-weight: 750; line-height: 1.45; }
+    .kind { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: #f1eee5; color: #68685c; font-size: 11px; font-weight: 650; vertical-align: 2px; }
+    .desc { margin: 5px 0 0; color: #68695f; font-size: 15px; line-height: 1.65; }
+    .note { margin-top: 26px; padding: 15px 17px; border-left: 3px solid var(--sun); border-radius: 0 12px 12px 0; background: #f4eedf; color: #655d4e; font-size: 14px; }
+    footer { padding-top: 24px; color: var(--muted); text-align: center; font-size: 13px; }
+    @media (min-width: 640px) {
+      .page { padding-top: 48px; }
+      .hero { padding: 40px 42px 36px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">同心同行・輕鬆提案</p>
+      <h1>增進同仁互動最佳方案</h1>
+      <p class="intro">用兩天一夜走進台南巷弄，讓同仁自在交流、共享美食與風景，留下愉快又親近的團隊回憶。</p>
+      <div class="hero-note"><span></span>預算與行程為示意，後續可依人數及實際報價調整</div>
+          <section aria-label="提案預算" style="position:relative;z-index:1;margin-top:20px;padding:16px 18px;border:1px solid rgba(100,123,100,.24);border-radius:18px;background:rgba(255,253,248,.88);">
+        <p style="margin:0;color:#647b64;font-size:13px;font-weight:750;letter-spacing:.08em;">提案預算・示意估算</p>
+        <p style="margin:2px 0 0;font-size:clamp(25px,7vw,34px);font-weight:800;line-height:1.35;">每人約 NT$ 3,000</p>
+        <p style="margin:3px 0 0;color:#68695f;font-size:14px;">含交通、住宿、餐飲與小額體驗；實際金額依人數及訂購內容調整。</p>
+      </section>    </header>
+
+    <nav class="day-nav" aria-label="行程日程">
+      <a href="#day1">第一天・老城散步</a>
+      <a href="#day2">第二天・慢慢早晨</a>
+    </nav>
+
+    <section class="day" id="day1" aria-labelledby="day1-title">
+      <div class="day-heading">
+        <div class="day-number">DAY 01</div>
+        <div><h2 id="day1-title">第一天｜老城散步</h2><p class="day-subtitle">抵達、走走，再把晚餐吃得剛剛好</p></div>
+      </div>
+      <div class="stops">
+        <article class="stop"><time class="time" datetime="10:30">10:30</time><div><h3 class="place">巷口豆花店 <span class="kind">甜點・示意</span></h3><p class="desc">先用一碗清爽豆花開場，坐下來慢慢切換成旅行節奏。</p></div></article>
+        <article class="stop"><time class="time" datetime="12:00">12:00</time><div><h3 class="place">老街小食堂 <span class="kind">午餐・示意</span></h3><p class="desc">挑幾樣台南家常菜分享，吃飽後沿著街屋散步消食。</p></div></article>
+        <article class="stop"><time class="time" datetime="14:30">14:30</time><div><h3 class="place">樹下老屋咖啡 <span class="kind">咖啡・示意</span></h3><p class="desc">找一間有老窗和綠意的咖啡店，讓午後留白一小段。</p></div></article>
+        <article class="stop"><time class="time" datetime="18:00">18:00</time><div><h3 class="place">運河邊小館 <span class="kind">晚餐・示意</span></h3><p class="desc">天色轉柔時吃頓簡單晚餐，再沿著水岸吹吹晚風。</p></div></article>
+      </div>
+    </section>
+
+    <section class="day" id="day2" aria-labelledby="day2-title">
+      <div class="day-heading">
+        <div class="day-number">DAY 02</div>
+        <div><h2 id="day2-title">第二天｜慢慢早晨</h2><p class="day-subtitle">睡飽再出門，把最後半天留給喜歡的角落</p></div>
+      </div>
+      <div class="stops">
+        <article class="stop"><time class="time" datetime="09:00">09:00</time><div><h3 class="place">晨光早餐舖 <span class="kind">早餐・示意</span></h3><p class="desc">從熱呼呼的早餐開始，替今天的散步補滿元氣。</p></div></article>
+        <article class="stop"><time class="time" datetime="10:30">10:30</time><div><h3 class="place">老樹散步小徑 <span class="kind">散步・示意</span></h3><p class="desc">不趕路，看看老房子、樹影和沿路的小小店家。</p></div></article>
+        <article class="stop"><time class="time" datetime="12:30">12:30</time><div><h3 class="place">市場裡的麵店 <span class="kind">午餐・示意</span></h3><p class="desc">用一碗熟悉的麵和幾道小菜，替旅程收個暖暖的尾。</p></div></article>
+        <article class="stop"><time class="time" datetime="14:00">14:00</time><div><h3 class="place">街角伴手禮舖 <span class="kind">採買・示意</span></h3><p class="desc">挑一份帶得走的小點心，把這趟旅行的味道留到回家。</p></div></article>
+      </div>
+    </section>
+
+    <aside class="note">小提醒：以上店名與時間皆為示意，交通方式、營業時間與預約需求請依實際店家資訊更新。</aside>
+    <section aria-labelledby="prep-title">
+      <h2 id="prep-title">行前提醒</h2>
+      <p>天氣：示意，出發前查看台南天氣預報。</p>
+      <p>要帶的東西：示意，水、遮陽用品與舒適好走的鞋。</p>
+      <p>集合時間：示意，第一天上午 10:00。</p>
+    </section>    <footer>一起走走、一起分享，讓每段旅程都成為團隊好回憶。 ☀</footer>
+  </main>
+</body>
+</html>
+
+
+
+
+

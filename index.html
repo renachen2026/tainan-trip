@@ -3,19 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f6f0e5">
+  <meta name="theme-color" content="#FFF6E8">
   <title>增進同仁互動最佳方案｜台南兩天一夜</title>
   <style>
+    .auth-shell { width: min(100% - 32px, 460px); margin: 8vh auto; padding: 30px; border: 1px solid var(--color-primary); border-radius: 24px; background: var(--color-background); }
+    .auth-shell h1 { font-size: 30px; }
+    .auth-form { display: grid; gap: 12px; margin-top: 20px; }
+    .auth-form label { display: grid; gap: 4px; font-size: 14px; font-weight: 700; }
+    .auth-form input { min-height: 44px; padding: 9px 12px; border: 1px solid var(--color-primary); border-radius: 10px; background: white; font: inherit; }
+    .auth-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    .auth-actions button, .signout-button { min-height:44px; padding:8px 14px; border:1px solid var(--color-primary); border-radius:12px; background:var(--color-primary); color:var(--color-background); font:inherit; cursor:pointer; }
+    .auth-actions button.secondary { background:var(--color-background); color:var(--color-text); }
+    .auth-message { min-height:1.5em; font-size:14px; }
+    .auth-user { display:flex; justify-content:flex-end; align-items:center; gap:12px; margin-bottom:12px; font-size:14px; }
+    .auth-user[hidden], #protected-app[hidden], #auth-screen[hidden] { display:none; }
+    .dinner-vote { margin-top: 26px; padding: 20px; border: 1px solid var(--color-primary); border-radius: 18px; background: var(--color-background); color: var(--color-text); }
+    .dinner-vote > p { margin: 8px 0 16px; }
+    .vote-label, .vote-options legend { display: block; margin: 12px 0 6px; font-weight: 700; }
+    #vote-nickname { display: block; width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid var(--color-primary); border-radius: 10px; background: var(--color-background); color: var(--color-text); font: inherit; }
+    .vote-options { display: grid; gap: 8px; margin: 12px 0 16px; padding: 12px; border: 1px solid var(--color-primary); border-radius: 12px; }
+    .vote-options label { display: flex; align-items: center; gap: 9px; min-height: 40px; }
+    .vote-options input { width: 20px; height: 20px; accent-color: var(--color-primary); }
+    .vote-submit { min-height: 46px; padding: 10px 18px; border: 1px solid var(--color-primary); border-radius: 12px; background: var(--color-primary); color: var(--color-background); font: inherit; font-weight: 750; cursor: pointer; }
+    .vote-submit:disabled { opacity: .65; cursor: wait; }
+    .vote-submit:focus-visible, #vote-nickname:focus-visible, .vote-options input:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
+    .vote-status { min-height: 1.7em; margin: 12px 0; font-weight: 650; }
+    .vote-results { margin-top: 20px; }
+    .vote-results h3 { margin: 0; font-size: 19px; }
+    #vote-counts { display: grid; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
+    #vote-counts li { display: flex; justify-content: space-between; gap: 16px; padding: 9px 12px; border: 1px solid var(--color-primary); border-radius: 10px; background: var(--color-background); }
+    #vote-counts strong { font-variant-numeric: tabular-nums; }
+    @media (max-width: 420px) { .dinner-vote { padding: 16px; } }
     :root {
       color-scheme: light;
-      --ink: #2f302b;
-      --muted: #73756b;
-      --paper: #fbf8f1;
-      --card: #fffdf8;
-      --line: #e9e1d2;
-      --orange: #bf603b;
-      --green: #647b64;
-      --sun: #e5bd65;
+      --color-primary: #B65335;
+      --color-background: #FFF6E8;
+      --color-text: #25231F;
+      --ink: var(--color-text);
+      --muted: var(--color-text);
+      --paper: var(--color-background);
+      --card: var(--color-background);
+      --line: var(--color-primary);
+      --orange: var(--color-primary);
+      --green: var(--color-primary);
+      --sun: var(--color-primary);
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -33,24 +64,24 @@
       position: relative;
       overflow: hidden;
       padding: 32px 24px 28px;
-      border: 1px solid #eadfc9;
+      border: 1px solid var(--color-primary);
       border-radius: 26px;
       background: #f2e7d2;
     }
     .hero::after {
       content: ""; position: absolute; width: 170px; height: 170px; right: -42px; top: -52px;
-      border: 1px solid rgba(191,96,59,.22); border-radius: 50%;
-      box-shadow: 0 0 0 18px rgba(191,96,59,.05), 0 0 0 38px rgba(191,96,59,.04);
+      border: 1px solid rgba(182,83,53,.22); border-radius: 50%;
+      box-shadow: 0 0 0 18px rgba(182,83,53,.05), 0 0 0 38px rgba(182,83,53,.04);
       pointer-events: none;
     }
     .eyebrow { margin: 0 0 6px; color: var(--orange); font-size: 13px; font-weight: 750; letter-spacing: .16em; }
     h1 { margin: 0; font-size: clamp(32px, 8vw, 48px); line-height: 1.2; letter-spacing: .04em; }
-    .intro { max-width: 34em; margin: 13px 0 0; color: #5b5b50; font-size: 16px; }
-    .hero-note { display: inline-flex; align-items: center; gap: 8px; margin-top: 19px; padding: 7px 12px; border-radius: 999px; background: rgba(255,253,248,.72); color: #655746; font-size: 13px; font-weight: 650; }
+    .intro { max-width: 34em; margin: 13px 0 0; color: var(--color-text); font-size: 16px; }
+    .hero-note { display: inline-flex; align-items: center; gap: 8px; margin-top: 19px; padding: 7px 12px; border-radius: 999px; background: rgba(255,253,248,.72); color: var(--color-text); font-size: 13px; font-weight: 650; }
     .hero-note span { width: 7px; height: 7px; border-radius: 50%; background: var(--sun); }
     .day-nav { display: flex; gap: 10px; margin: 20px 0 30px; }
     .day-nav a { flex: 1; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--ink); text-align: center; text-decoration: none; font-size: 15px; font-weight: 700; }
-    .day-nav a:focus-visible, a:focus-visible { outline: 3px solid #bd795d; outline-offset: 3px; }
+    .day-nav a:focus-visible, a:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
     .day { margin-top: 30px; scroll-margin-top: 16px; }
     .day-heading { display: flex; align-items: center; gap: 12px; margin: 0 0 15px; }
     .day-number { display: grid; place-items: center; flex: 0 0 48px; height: 48px; border-radius: 16px; background: var(--green); color: white; font-size: 14px; font-weight: 750; }
@@ -58,25 +89,88 @@
     h2 { margin: 0; font-size: 23px; line-height: 1.35; }
     .day-subtitle { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
     .stops { position: relative; display: grid; gap: 14px; padding-left: 27px; }
-    .stops::before { content: ""; position: absolute; top: 12px; bottom: 12px; left: 8px; width: 2px; background: linear-gradient(var(--green), #d9c797, var(--orange)); }
+    .stops::before { content: ""; position: absolute; top: 12px; bottom: 12px; left: 8px; width: 2px; background: linear-gradient(var(--green), var(--color-primary), var(--orange)); }
     .stop { position: relative; display: block; padding: 15px 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
     .stop::before { content: ""; position: absolute; left: -25px; top: 21px; width: 12px; height: 12px; border: 3px solid var(--paper); border-radius: 50%; background: var(--green); box-shadow: 0 0 0 1px var(--green); }
     .stop:nth-child(even)::before { background: var(--orange); box-shadow: 0 0 0 1px var(--orange); }
     .time { display: inline-block; margin: 0 0 4px; color: var(--orange); font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
     .place { margin: 0; font-size: 18px; font-weight: 750; line-height: 1.45; }
-    .kind { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: #f1eee5; color: #68685c; font-size: 11px; font-weight: 650; vertical-align: 2px; }
-    .desc { margin: 5px 0 0; color: #68695f; font-size: 15px; line-height: 1.65; }
-    .note { margin-top: 26px; padding: 15px 17px; border-left: 3px solid var(--sun); border-radius: 0 12px 12px 0; background: #f4eedf; color: #655d4e; font-size: 14px; }
+    .kind { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: var(--color-background); color: var(--color-text); font-size: 11px; font-weight: 650; vertical-align: 2px; }
+    .desc { margin: 5px 0 0; color: var(--color-text); font-size: 15px; line-height: 1.65; }
+    .note { margin-top: 26px; padding: 15px 17px; border-left: 3px solid var(--sun); border-radius: 0 12px 12px 0; background: var(--color-background); color: var(--color-text); font-size: 14px; }
     footer { padding-top: 24px; color: var(--muted); text-align: center; font-size: 13px; }
     @media (min-width: 640px) {
       .page { padding-top: 48px; }
       .hero { padding: 40px 42px 36px; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    /* Color palette and accessible type refinements */
+    body {
+      background: var(--color-background);
+      color: var(--color-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+    h1, h2 { font-family: Georgia, "Noto Serif TC", "Songti TC", "PMingLiU", serif; }
+    .time { font-weight: 800; }
+    .hero, .stop, .day-nav a, .hero-note, .kind, .note,
+    section[aria-label="提案預算"] { background: var(--color-background) !important; }
+    .hero, .stop, .day-nav a, .note, section[aria-label="提案預算"] { border-color: var(--color-primary) !important; }
+    body, body p, body h1, body h2, body h3, body article, body section, body footer,
+    .intro, .day-subtitle, .desc, .note, .hero-note, .kind,
+    section[aria-label="提案預算"] p { color: var(--color-text) !important; }
+    .eyebrow, .time, a { color: var(--color-primary) !important; }
+    .day-number { background: var(--color-primary) !important; color: var(--color-background) !important; }
+    .day-nav a { font-size: 17px; }
+    .day-subtitle, .desc, .note, footer, .intro,
+    section[aria-label="提案預算"] p { font-size: 17px !important; line-height: 1.7; }
+    .stops::before { background: var(--color-primary); }
+    .stop::before { background: var(--color-primary) !important; border-color: var(--color-background); box-shadow: 0 0 0 1px var(--color-primary); }
+    a:focus-visible { outline-color: var(--color-primary); }
+    .place-icon { display: inline-block; margin-right: .35em; font-size: 1em; line-height: 1; vertical-align: middle; }
+    .today-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; }
+    .today-controls span { font-weight: 700; }
+    .today-controls button { min-height: 44px; padding: 8px 13px; border: 1px solid var(--color-primary); border-radius: 12px; background: var(--color-background); color: var(--color-text); font: inherit; cursor: pointer; }
+    .today-controls button[aria-pressed="true"] { background: var(--color-primary); color: var(--color-background); }
+    .today-controls button:focus-visible, .stop-checkbox:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
+    .view-status { margin: 0; color: var(--color-text); font-size: 14px; }
+    .day[hidden] { display: none; }
+    .stop-checkbox { width: 22px; height: 22px; margin: 0 9px 0 0; accent-color: var(--color-primary); vertical-align: -4px; cursor: pointer; }
+    .stop:has(.stop-checkbox:checked) { border-color: var(--color-primary); }
+    .stop:has(.stop-checkbox:checked) .place { text-decoration: line-through; text-decoration-thickness: 1px; }
+    .dinner-vote { margin-top: 26px; padding: 20px; border: 1px solid var(--color-primary); border-radius: 18px; background: var(--color-background); color: var(--color-text); }
+    .dinner-vote > p { margin: 8px 0 16px; }
+    .vote-label, .vote-options legend { display: block; margin: 12px 0 6px; font-weight: 700; }
+    #vote-nickname { display: block; width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid var(--color-primary); border-radius: 10px; background: var(--color-background); color: var(--color-text); font: inherit; }
+    .vote-options { display: grid; gap: 8px; margin: 12px 0 16px; padding: 12px; border: 1px solid var(--color-primary); border-radius: 12px; }
+    .vote-options label { display: flex; align-items: center; gap: 9px; min-height: 40px; }
+    .vote-options input { width: 20px; height: 20px; accent-color: var(--color-primary); }
+    .vote-submit { min-height: 46px; padding: 10px 18px; border: 1px solid var(--color-primary); border-radius: 12px; background: var(--color-primary); color: var(--color-background); font: inherit; font-weight: 750; cursor: pointer; }
+    .vote-submit:disabled { opacity: .65; cursor: wait; }
+    .vote-submit:focus-visible, #vote-nickname:focus-visible, .vote-options input:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
+    .vote-status { min-height: 1.7em; margin: 12px 0; font-weight: 650; }
+    .vote-results { margin-top: 20px; }
+    .vote-results h3 { margin: 0; font-size: 19px; }
+    #vote-counts { display: grid; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
+    #vote-counts li { display: flex; justify-content: space-between; gap: 16px; padding: 9px 12px; border: 1px solid var(--color-primary); border-radius: 10px; background: var(--color-background); }
+    #vote-counts strong { font-variant-numeric: tabular-nums; }
+    @media (max-width: 420px) { .dinner-vote { padding: 16px; } }
   </style>
 </head>
 <body>
+  <section id="auth-screen" class="auth-shell" aria-labelledby="auth-title" hidden>
+    <p class="eyebrow">Supabase Auth</p><h1 id="auth-title">登入行程</h1>
+    <p>請使用電子郵件登入，或建立帳號以查看行程。</p>
+    <form id="auth-form" class="auth-form">
+      <label>電子郵件<input id="auth-email" type="email" autocomplete="email" required></label>
+      <label>密碼<input id="auth-password" type="password" autocomplete="current-password" minlength="6" required></label>
+      <div class="auth-actions"><button type="submit" data-auth-action="signin">登入</button><button class="secondary" type="button" data-auth-action="signup">建立帳號</button></div>
+    </form><p id="auth-message" class="auth-message" role="status" aria-live="polite"></p>
+  </section>
+  <div id="protected-app" hidden>
   <main class="page">
+    <div class="auth-user"><span id="auth-user-email"></span><button id="signout-button" class="signout-button" type="button">登出</button></div>
     <header class="hero">
       <p class="eyebrow">同心同行・輕鬆提案</p>
       <h1>增進同仁互動最佳方案</h1>
@@ -91,7 +185,13 @@
     <nav class="day-nav" aria-label="行程日程">
       <a href="#day1">第一天・老城散步</a>
       <a href="#day2">第二天・慢慢早晨</a>
-    </nav>
+    </nav>    <div class="today-controls" role="group" aria-label="選擇要看的行程">
+      <span>今天看：</span>
+      <button type="button" data-show-day="day1" aria-pressed="false">第一天</button>
+      <button type="button" data-show-day="day2" aria-pressed="false">第二天</button>
+      <button type="button" data-show-day="all" aria-pressed="true">看兩天</button>
+    </div>
+    <p class="view-status" aria-live="polite">目前顯示兩天行程，請選擇今天要看的日程。</p>
 
     <section class="day" id="day1" aria-labelledby="day1-title">
       <div class="day-heading">
@@ -99,10 +199,10 @@
         <div><h2 id="day1-title">第一天｜老城散步</h2><p class="day-subtitle">抵達、走走，再把晚餐吃得剛剛好</p></div>
       </div>
       <div class="stops">
-        <article class="stop"><time class="time" datetime="10:30">10:30</time><div><h3 class="place">巷口豆花店 <span class="kind">甜點・示意</span></h3><p class="desc">先用一碗清爽豆花開場，坐下來慢慢切換成旅行節奏。</p></div></article>
-        <article class="stop"><time class="time" datetime="12:00">12:00</time><div><h3 class="place">老街小食堂 <span class="kind">午餐・示意</span></h3><p class="desc">挑幾樣台南家常菜分享，吃飽後沿著街屋散步消食。</p></div></article>
-        <article class="stop"><time class="time" datetime="14:30">14:30</time><div><h3 class="place">樹下老屋咖啡 <span class="kind">咖啡・示意</span></h3><p class="desc">找一間有老窗和綠意的咖啡店，讓午後留白一小段。</p></div></article>
-        <article class="stop"><time class="time" datetime="18:00">18:00</time><div><h3 class="place">運河邊小館 <span class="kind">晚餐・示意</span></h3><p class="desc">天色轉柔時吃頓簡單晚餐，再沿著水岸吹吹晚風。</p></div></article>
+        <article class="stop"><input class="stop-checkbox" type="checkbox" data-stop-id="day1-stop1" aria-label="標記已完成：巷口豆花店"><time class="time" datetime="10:30">10:30</time><div><h3 class="place"><span class="place-icon" aria-hidden="true">🍧</span>巷口豆花店 <span class="kind">甜點・示意</span> <a href="https://www.google.com/maps/search/?api=1&query=%E5%B7%B7%E5%8F%A3%E8%B1%86%E8%8A%B1%E5%BA%97%20%E5%8F%B0%E5%8D%97" target="_blank" rel="noopener noreferrer">在 Google 地圖打開</a></h3><p class="desc">先用一碗清爽豆花開場，坐下來慢慢切換成旅行節奏。</p></div></article>
+        <article class="stop"><input class="stop-checkbox" type="checkbox" data-stop-id="day1-stop2" aria-label="標記已完成：老街小食堂"><time class="time" datetime="12:00">12:00</time><div><h3 class="place"><span class="place-icon" aria-hidden="true">🍜</span>老街小食堂 <span class="kind">午餐・示意</span> <a href="https://www.google.com/maps/search/?api=1&query=%E8%80%81%E8%A1%97%E5%B0%8F%E9%A3%9F%E5%A0%82%20%E5%8F%B0%E5%8D%97" target="_blank" rel="noopener noreferrer">在 Google 地圖打開</a></h3><p class="desc">挑幾樣台南家常菜分享，吃飽後沿著街屋散步消食。</p></div></article>
+        <article class="stop"><input class="stop-checkbox" type="checkbox" data-stop-id="day1-stop3" aria-label="標記已完成：樹下老屋咖啡"><time class="time" datetime="14:30">14:30</time><div><h3 class="place"><span class="place-icon" aria-hidden="true">🍧</span>樹下老屋咖啡 <span class="kind">咖啡・示意</span> <a href="https://www.google.com/maps/search/?api=1&query=%E6%A8%B9%E4%B8%8B%E8%80%81%E5%B1%8B%E5%92%96%E5%95%A1%20%E5%8F%B0%E5%8D%97" target="_blank" rel="noopener noreferrer">在 Google 地圖打開</a></h3><p class="desc">找一間有老窗和綠意的咖啡店，讓午後留白一小段。</p></div></article>
+        <article class="stop"><input class="stop-checkbox" type="checkbox" data-stop-id="day1-stop4" aria-label="標記已完成：運河邊小館"><time class="time" datetime="18:00">18:00</time><div><h3 class="place"><span class="place-icon" aria-hidden="true">🍜</span>運河邊小館 <span class="kind">晚餐・示意</span> <a href="https://www.google.com/maps/search/?api=1&query=%E9%81%8B%E6%B2%B3%E9%82%8A%E5%B0%8F%E9%A4%A8%20%E5%8F%B0%E5%8D%97" target="_blank" rel="noopener noreferrer">在 Google 地圖打開</a></h3><p class="desc">天色轉柔時吃頓簡單晚餐，再沿著水岸吹吹晚風。</p></div></article>
       </div>
     </section>
 
@@ -112,13 +212,34 @@
         <div><h2 id="day2-title">第二天｜慢慢早晨</h2><p class="day-subtitle">睡飽再出門，把最後半天留給喜歡的角落</p></div>
       </div>
       <div class="stops">
-        <article class="stop"><time class="time" datetime="09:00">09:00</time><div><h3 class="place">晨光早餐舖 <span class="kind">早餐・示意</span></h3><p class="desc">從熱呼呼的早餐開始，替今天的散步補滿元氣。</p></div></article>
-        <article class="stop"><time class="time" datetime="10:30">10:30</time><div><h3 class="place">老樹散步小徑 <span class="kind">散步・示意</span></h3><p class="desc">不趕路，看看老房子、樹影和沿路的小小店家。</p></div></article>
-        <article class="stop"><time class="time" datetime="12:30">12:30</time><div><h3 class="place">市場裡的麵店 <span class="kind">午餐・示意</span></h3><p class="desc">用一碗熟悉的麵和幾道小菜，替旅程收個暖暖的尾。</p></div></article>
-        <article class="stop"><time class="time" datetime="14:00">14:00</time><div><h3 class="place">街角伴手禮舖 <span class="kind">採買・示意</span></h3><p class="desc">挑一份帶得走的小點心，把這趟旅行的味道留到回家。</p></div></article>
+        <article class="stop"><input class="stop-checkbox" type="checkbox" data-stop-id="day2-stop1" aria-label="標記已完成：晨光早餐舖"><time class="time" datetime="09:00">09:00</time><div><h3 class="place"><span class="place-icon" aria-hidden="true">🍜</span>晨光早餐舖 <span class="kind">早餐・示意</span> <a href="https://www.google.com/maps/search/?api=1&query=%E6%99%A8%E5%85%89%E6%97%A9%E9%A4%90%E8%88%96%20%E5%8F%B0%E5%8D%97" target="_blank" rel="noopener noreferrer">在 Google 地圖打開</a></h3><p class="desc">從熱呼呼的早餐開始，替今天的散步補滿元氣。</p></div></article>
+        <article class="stop"><input class="stop-checkbox" type="checkbox" data-stop-id="day2-stop2" aria-label="標記已完成：老樹散步小徑"><time class="time" datetime="10:30">10:30</time><div><h3 class="place"><span class="place-icon" aria-hidden="true">🚶</span>老樹散步小徑 <span class="kind">散步・示意</span> <a href="https://www.google.com/maps/search/?api=1&query=%E8%80%81%E6%A8%B9%E6%95%A3%E6%AD%A5%E5%B0%8F%E5%BE%91%20%E5%8F%B0%E5%8D%97" target="_blank" rel="noopener noreferrer">在 Google 地圖打開</a></h3><p class="desc">不趕路，看看老房子、樹影和沿路的小小店家。</p></div></article>
+        <article class="stop"><input class="stop-checkbox" type="checkbox" data-stop-id="day2-stop3" aria-label="標記已完成：市場裡的麵店"><time class="time" datetime="12:30">12:30</time><div><h3 class="place"><span class="place-icon" aria-hidden="true">🍜</span>市場裡的麵店 <span class="kind">午餐・示意</span> <a href="https://www.google.com/maps/search/?api=1&query=%E5%B8%82%E5%A0%B4%E8%A3%A1%E7%9A%84%E9%BA%B5%E5%BA%97%20%E5%8F%B0%E5%8D%97" target="_blank" rel="noopener noreferrer">在 Google 地圖打開</a></h3><p class="desc">用一碗熟悉的麵和幾道小菜，替旅程收個暖暖的尾。</p></div></article>
+        <article class="stop"><input class="stop-checkbox" type="checkbox" data-stop-id="day2-stop4" aria-label="標記已完成：街角伴手禮舖"><time class="time" datetime="14:00">14:00</time><div><h3 class="place"><span class="place-icon" aria-hidden="true">📍</span>街角伴手禮舖 <span class="kind">採買・示意</span> <a href="https://www.google.com/maps/search/?api=1&query=%E8%A1%97%E8%A7%92%E4%BC%B4%E6%89%8B%E7%A6%AE%E8%88%96%20%E5%8F%B0%E5%8D%97" target="_blank" rel="noopener noreferrer">在 Google 地圖打開</a></h3><p class="desc">挑一份帶得走的小點心，把這趟旅行的味道留到回家。</p></div></article>
       </div>
     </section>
 
+    <section class="dinner-vote" aria-labelledby="dinner-vote-title">
+      <h2 id="dinner-vote-title">晚餐投票</h2>
+      <p>選一個想吃的晚餐方向，投票後即可查看目前票數。</p>
+      <form id="dinner-vote-form">
+        <label class="vote-label" for="vote-nickname">你的暱稱</label>
+        <input id="vote-nickname" name="nickname" type="text" maxlength="24" autocomplete="nickname" required>
+        <fieldset class="vote-options">
+          <legend>晚餐選項</legend>
+          <label><input type="radio" name="choice" value="台南小吃" required> 台南小吃</label>
+          <label><input type="radio" name="choice" value="牛肉湯"> 牛肉湯</label>
+          <label><input type="radio" name="choice" value="海鮮熱炒"> 海鮮熱炒</label>
+          <label><input type="radio" name="choice" value="台式火鍋"> 台式火鍋</label>
+        </fieldset>
+        <button class="vote-submit" type="submit">送出我的一票</button>
+      </form>
+      <p id="vote-status" class="vote-status" role="status" aria-live="polite"></p>
+      <div class="vote-results" aria-live="polite">
+        <h3>目前票數</h3>
+        <ul id="vote-counts"></ul>
+      </div>
+    </section>
     <aside class="note">小提醒：以上店名與時間皆為示意，交通方式、營業時間與預約需求請依實際店家資訊更新。</aside>
     <section aria-labelledby="prep-title">
       <h2 id="prep-title">行前提醒</h2>
@@ -127,10 +248,166 @@
       <p>集合時間：示意，第一天上午 10:00。</p>
     </section>    <footer>一起走走、一起分享，讓每段旅程都成為團隊好回憶。 ☀</footer>
   </main>
+  </div>
+  <script>
+    const publicVote = document.querySelector(".dinner-vote");
+    const publicVotePage = document.createElement("main");
+    publicVotePage.className = "page";
+    publicVotePage.append(publicVote);
+    document.body.insertBefore(publicVotePage, document.querySelector("#protected-app"));
+  </script>
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.0";
+    const supabase = createClient("https://euvuyefjkygqneyzctrw.supabase.co", "sb_publishable_2EMzVziW4sv40QiOVdwAVg_t1ys4hVB");
+
+    const authScreen = document.querySelector("#auth-screen");
+    const protectedApp = document.querySelector("#protected-app");
+    const authForm = document.querySelector("#auth-form");
+    const authMessage = document.querySelector("#auth-message");
+    function renderAuth(user) {
+      authScreen.hidden = Boolean(user); protectedApp.hidden = !user;
+      document.querySelector("#auth-user-email").textContent = user?.email ?? "";
+      if (!user) authMessage.textContent = "";
+    }
+    renderAuth(null);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => renderAuth(session?.user ?? null));
+    const { data: { session } } = await supabase.auth.getSession(); renderAuth(session?.user ?? null);
+    authForm.addEventListener("submit", async (event) => {
+      event.preventDefault(); authMessage.textContent = "正在登入…";
+      const email = document.querySelector("#auth-email").value.trim();
+      const password = document.querySelector("#auth-password").value;
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      authMessage.textContent = error ? error.message : "登入成功。";
+    });
+    document.querySelector("[data-auth-action=signup]").addEventListener("click", async () => {
+      authMessage.textContent = "正在建立帳號…";
+      const email = document.querySelector("#auth-email").value.trim();
+      const password = document.querySelector("#auth-password").value;
+      if (!email || password.length < 6) { authMessage.textContent = "請輸入有效電子郵件及至少 6 個字元的密碼。"; return; }
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      authMessage.textContent = error ? error.message : data.session ? "帳號建立成功，已登入。" : "請查看電子郵件完成驗證，再回來登入。";
+    });
+    document.querySelector("#signout-button").addEventListener("click", async () => { const { error } = await supabase.auth.signOut(); if (error) authMessage.textContent = error.message; });
+    window.addEventListener("pagehide", () => subscription.unsubscribe());
+    (() => {
+      const storageKey = "tainan-trip-checklist-v1";
+      const checkboxes = [...document.querySelectorAll(".stop-checkbox")];
+      const dayButtons = [...document.querySelectorAll("[data-show-day]")];
+      const days = [...document.querySelectorAll(".day")];
+      const status = document.querySelector(".view-status");
+
+      let checkedStops = {};
+      try {
+        checkedStops = JSON.parse(localStorage.getItem(storageKey) || "{}");
+      } catch {
+        checkedStops = {};
+      }
+
+      checkboxes.forEach((checkbox) => {
+        const id = checkbox.dataset.stopId;
+        checkbox.checked = checkedStops[id] === true;
+        checkbox.addEventListener("change", () => {
+          checkedStops[id] = checkbox.checked;
+          try {
+            localStorage.setItem(storageKey, JSON.stringify(checkedStops));
+          } catch {
+            status.textContent = "這個瀏覽器目前無法保存勾選狀態。";
+          }
+        });
+      });
+
+      function showDay(selection) {
+        days.forEach((day) => {
+          day.hidden = selection !== "all" && day.id !== selection;
+        });
+        dayButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.showDay === selection));
+        });
+        status.textContent = selection === "all"
+          ? "目前顯示兩天行程，請選擇今天要看的日程。"
+          : `目前只顯示${selection === "day1" ? "第一天" : "第二天"}行程。`;
+      }
+
+      dayButtons.forEach((button) => {
+        button.addEventListener("click", () => showDay(button.dataset.showDay));
+      });
+      showDay("all");
+    })();
+
+  </script>
+
+  <script>
+    (() => {
+      const SUPABASE_URL = "https://euvuyefjkygqneyzctrw.supabase.co";
+      const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2EMzVziW4sv40QiOVdwAVg_t1ys4hVB";
+      const TABLE_URL = SUPABASE_URL + "/rest/v1/dinner_votes";
+      const options = ["台南小吃", "牛肉湯", "海鮮熱炒", "台式火鍋"];
+      const form = document.querySelector("#dinner-vote-form");
+      const status = document.querySelector("#vote-status");
+      const list = document.querySelector("#vote-counts");
+      const submit = form.querySelector("button[type=submit]");
+
+      async function loadVotes() {
+        status.textContent = "正在更新票數……";
+        try {
+          const response = await fetch(TABLE_URL + "?select=choice", {
+            headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Accept: "application/json" }
+          });
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          const votes = await response.json();
+          const counts = new Map(options.map((option) => [option, 0]));
+          votes.forEach((vote) => {
+            if (counts.has(vote.choice)) counts.set(vote.choice, counts.get(vote.choice) + 1);
+          });
+          list.replaceChildren();
+          options.forEach((option) => {
+            const item = document.createElement("li");
+            const name = document.createElement("span");
+            const count = document.createElement("strong");
+            name.textContent = option;
+            count.textContent = counts.get(option) + " 票";
+            item.append(name, count);
+            list.append(item);
+          });
+          status.textContent = "票數已更新。";
+        } catch {
+          status.textContent = "目前無法載入票數，請稍後重試。";
+        }
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const nickname = form.elements.nickname.value.trim();
+        const choice = form.elements.choice.value;
+        if (!nickname || !options.includes(choice)) {
+          status.textContent = "請填寫暱稱並選擇一個晚餐選項。";
+          return;
+        }
+        submit.disabled = true;
+        status.textContent = "正在送出投票……";
+        try {
+          const response = await fetch(TABLE_URL, {
+            method: "POST",
+            headers: {
+              apikey: SUPABASE_PUBLISHABLE_KEY,
+              "Content-Type": "application/json",
+              Prefer: "return=minimal"
+            },
+            body: JSON.stringify({ nickname, choice })
+          });
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          form.reset();
+          await loadVotes();
+          status.textContent = "收到！你的票已加入，票數已更新。";
+        } catch {
+          status.textContent = "投票沒有送出，請稍後重試。";
+        } finally {
+          submit.disabled = false;
+        }
+      });
+
+      loadVotes();
+    })();
+  </script>
 </body>
 </html>
-
-
-
-
-
